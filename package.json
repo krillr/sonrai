@@ -1,0 +1,13 @@
+{ "author" : "Krillr Labs <labs@krillr.com>",
+  "description" : "zerorouter application",
+  "devDependencies" : { "coffee-script" : "~1.7.1" },
+  "license" : "Apache-2.0",
+  "main" : "sonrai",
+  "name" : "sonrai",
+  "repository" : {
+      "type" : "git",
+      "url" : "https://bitbucket.org/krillrlabs/sonrai"
+    },
+  "scripts" : { "prepublish" : "cd src/; cat events.coffee errors.coffee utils.coffee databases/base.coffee databases/memory.coffee model.coffee query.coffee fields.coffee package.coffee > sonrai.coffee; coffee -o ../ -c sonrai.coffee" },
+  "version" : "0.1.0"
+}
