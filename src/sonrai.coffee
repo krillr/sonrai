@@ -185,9 +185,9 @@ class Model extends EventEmitter
     return serialized
 
   deserialize: (data) ->
-    for fieldName, field in @fields
+    for fieldName, field of @fields
       if data[fieldName]?
-        @field.deserialize(data[fieldName])
+        field.deserialize(data[fieldName])
 
   save: ->
     return @db().save(@name(), @)
@@ -245,7 +245,7 @@ Fields.BaseField = (options) ->
 
     deserialize: (fieldData) ->
       if fieldData?
-        @set(Number(fieldData))
+        @set(fieldData)
 
     serialize: ->
       return @value

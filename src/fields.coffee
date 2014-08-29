@@ -8,7 +8,7 @@ Fields.BaseField = (options) ->
 
     deserialize: (fieldData) ->
       if fieldData?
-        @set(Number(fieldData))
+        @set(fieldData)
 
     serialize: ->
       return @value
