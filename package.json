@@ -9,8 +9,8 @@
       "url" : "https://bitbucket.org/krillrlabs/sonrai"
     },
   "scripts" : { "prepublish" : "cd src/; cat events.coffee errors.coffee utils.coffee databases/base.coffee databases/memory.coffee model.coffee query.coffee fields.coffee package.coffee > sonrai.coffee; coffee -o ../ -c sonrai.coffee",
- "pretest": "npm install tape testling",
- "test": "tape test/*.js" },
+ "pretest": "npm install tape testling browserify",
+ "test": "browserify test/test.js | testling" },
   "version" : "0.1.0",
   "testling": {
     "files": "test/*.js",
