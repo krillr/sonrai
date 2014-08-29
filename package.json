@@ -8,7 +8,9 @@
       "type" : "git",
       "url" : "https://bitbucket.org/krillrlabs/sonrai"
     },
-  "scripts" : { "prepublish" : "cd src/; cat events.coffee errors.coffee utils.coffee databases/base.coffee databases/memory.coffee model.coffee query.coffee fields.coffee package.coffee > sonrai.coffee; coffee -o ../ -c sonrai.coffee", "test": "tape test/*.js" },
+  "scripts" : { "prepublish" : "cd src/; cat events.coffee errors.coffee utils.coffee databases/base.coffee databases/memory.coffee model.coffee query.coffee fields.coffee package.coffee > sonrai.coffee; coffee -o ../ -c sonrai.coffee",
+ "pretest": "npm install tape",
+ "test": "tape test/*.js" },
   "version" : "0.1.0",
   "testling": {
     "files": "test/*.js",
