@@ -14,6 +14,8 @@ Sonrai.Fields.BaseField = (options) ->
       return @value
 
     validate: (value) ->
+      if not value? and @options.required
+        return false
       return true
 
     set: (value) ->
@@ -32,20 +34,16 @@ Sonrai.Fields.BaseField = (options) ->
 Sonrai.Fields.StringField = (options) ->
   class _Field extends Sonrai.Fields.BaseField(options)
     validate: (value) ->
-      if value == null and not @options.required
-        return true
-      else if value == null and @options.required
+      if value? and typeof value != 'string'
         return false
-      else if typeof value == 'string'
-        return true
-      return false
+      return true and (super value)
 
   return _Field
 
 Sonrai.Fields.NumberField = (options) ->
   class _Field extends Sonrai.Fields.BaseField(options)
     validate: (value) ->
-      if isNaN(Number(value))
+      if value? and isNaN(Number(value))
         return false
       return true and (super value)
 
@@ -54,11 +52,9 @@ Sonrai.Fields.NumberField = (options) ->
 Sonrai.Fields.DateTimeField = (options) ->
   class _Field extends Sonrai.Fields.BaseField(options)
     validate: (value) ->
-      if not value?
-        return true
-      if value instanceof Date
-        return true and (super value)
-      return false
+      if value? and not value instanceof Date
+        return false
+      return true and (super value)
 
     serialize: ->
       if @value?
