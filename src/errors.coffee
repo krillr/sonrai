@@ -1,16 +1,16 @@
-Errors = {}
+Sonrai.Errors = {}
 
-class Errors.ValidationFailed extends Error
+class Sonrai.Errors.ValidationFailed extends Error
   constructor: (value) ->
     @message = 'Invalid value: ' + value
 
-class Errors.ModelNotInstantiated extends Error
+class Sonrai.Errors.ModelNotInstantiated extends Error
   message: "Model must be instantiated to a database item to use this function."
 
-class Errors.FieldDoesNotExist extends Error
+class Sonrai.Errors.FieldDoesNotExist extends Error
   constructor: (fieldName) ->
     @message = "Field '" + fieldName + "' does not exist."
 
-class Errors.InvalidOperator extends Error
+class Sonrai.Errors.InvalidOperator extends Error
   constructor: (operator) ->
     @message = "Invalid operator: " + operator

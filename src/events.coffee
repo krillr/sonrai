@@ -1,4 +1,4 @@
-class EventEmitter
+class Sonrai.EventEmitter
   @listeners = {}
 
   @on: (event, cb) ->

@@ -1,4 +1,4 @@
-class Databases.InMemoryDatabase extends Databases.BaseDatabase
+class Sonrai.Databases.InMemoryDatabase extends Sonrai.Databases.BaseDatabase
   constructor: ->
     super
     @models = {}

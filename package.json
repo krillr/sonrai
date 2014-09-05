@@ -1,14 +1,14 @@
-{ "author" : "Krillr Labs <labs@krillr.com>",
-  "description" : "zerorouter application",
+{ "author" : "Krillr Labs <aaron@krillr.com>",
+  "description" : "clientside data model system inspired by mongodb and the django orm, with offline storage support.",
   "devDependencies" : { "coffee-script" : "~1.7.1" },
   "license" : "Apache-2.0",
-  "main" : "sonrai",
+  "main" : "sonrai-bundle",
   "name" : "sonrai",
   "repository" : {
       "type" : "git",
       "url" : "https://bitbucket.org/krillrlabs/sonrai"
     },
-  "scripts" : { "prepublish" : "cd src/; cat events.coffee errors.coffee utils.coffee databases/base.coffee databases/memory.coffee model.coffee query.coffee fields.coffee package.coffee > sonrai.coffee; coffee -o ../ -c sonrai.coffee",
+  "scripts" : { "prepublish" : "cd src/; cat sonrai.coffee events.coffee errors.coffee utils.coffee databases/base.coffee databases/memory.coffee databases/localstorage.coffee model.coffee query.coffee fields.coffee package.coffee > sonrai-bundle.coffee; coffee -bo ../ -c sonrai-bundle.coffee",
  "pretest": "npm install tape testling browserify",
  "test": "browserify test/test.js | testling",
  "posttest": "./build_artifacts.sh"},

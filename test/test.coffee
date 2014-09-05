@@ -1,7 +1,7 @@
 Sonrai = require('../sonrai')
 test = require('tape')
 
-MyDatabase = new Sonrai.Databases.InMemoryDatabase()
+MyDatabase = new Sonrai.Databases.LocalStorageDatabase()
 
 class MyModel extends Sonrai.Model
   @db: MyDatabase
@@ -15,9 +15,12 @@ class MyModel extends Sonrai.Model
 
 test('General tests', (t) ->
   t.plan(1)
-  obj = new MyModel({ myField: Sonrai.Utils.rand(100) })
-  obj.save()
-
+  s = new Date().getTime()
+  for x in [0..10000]
+    obj = new MyModel({ myField: Sonrai.Utils.rand(100) })
+    obj.save()
+  document.write((new Date().getTime()) - s)
+ 
   q = new Sonrai.Query(MyModel)
   q = q.filter({ myField: obj.get('myField') })
   results = q.run()

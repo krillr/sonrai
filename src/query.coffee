@@ -1,4 +1,4 @@
-class Query extends EventEmitter
+class Sonrai.Query extends Sonrai.EventEmitter
   validOperators: ['gt', 'gte', 'lt', 'lte']
   constructor: (@model) ->
     @filters = {}
@@ -23,17 +23,17 @@ class Query extends EventEmitter
   combine: (set, inc) ->
     for field, options of inc
       if not @model.prototype._fields[field]?
-        throw new Errors.FieldDoesNotExist(field)
+        throw new Sonrai.Errors.FieldDoesNotExist(field)
       if not set[field]?
         set[field] = {}
       if options instanceof Array
         set[field] = options
       else if options instanceof Object
         keys = Object.keys(options)
-        keys = Utils.exclude(keys, @validOperators)
+        keys = Sonrai.Utils.exclude(keys, @validOperators)
         if keys.length
-          throw new Errors.InvalidOperator(keys[0])
-        Utils.extend(set[field], options)
+          throw new Sonrai.Errors.InvalidOperator(keys[0])
+        Sonrai.Utils.extend(set[field], options)
       else
         set[field] = options
 

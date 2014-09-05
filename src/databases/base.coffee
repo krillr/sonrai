@@ -1,7 +1,11 @@
-Databases = {}
+Sonrai.Databases = {}
 
-class Databases.BaseDatabase extends EventEmitter
+class Sonrai.Databases.BaseDatabase extends Sonrai.EventEmitter
   constructor: ->
+
+  register: (model) ->
+    model.db = this
+
   operators: {
     'gte': (v1, v2) ->
       return v2 >= v1

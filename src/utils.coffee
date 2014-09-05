@@ -1,4 +1,6 @@
-Utils = {
+Sonrai.Utils = {
+  startswith: (s1, s2) ->
+    return s1.indexOf(s2) == 0
   intersect: (arr1, arr2) ->
     intersection = []
     for x in arr1

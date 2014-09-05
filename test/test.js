@@ -8,7 +8,7 @@
 
   test = require('tape');
 
-  MyDatabase = new Sonrai.Databases.InMemoryDatabase();
+  MyDatabase = new Sonrai.Databases.LocalStorageDatabase();
 
   MyModel = (function(_super) {
     __extends(MyModel, _super);
@@ -35,12 +35,16 @@
   })(Sonrai.Model);
 
   test('General tests', function(t) {
-    var obj, q, results;
+    var obj, q, results, s, x, _i;
     t.plan(1);
-    obj = new MyModel({
-      myField: Sonrai.Utils.rand(100)
-    });
-    obj.save();
+    s = new Date().getTime();
+    for (x = _i = 0; _i <= 100000; x = ++_i) {
+      obj = new MyModel({
+        myField: Sonrai.Utils.rand(100)
+      });
+      obj.save();
+    }
+    console.log((new Date().getTime()) - s);
     q = new Sonrai.Query(MyModel);
     q = q.filter({
       myField: obj.get('myField')

@@ -1,4 +1,4 @@
-class Model extends EventEmitter
+class Sonrai.Model extends Sonrai.EventEmitter
   @db: null
 
   constructor: (@data) ->
@@ -10,7 +10,7 @@ class Model extends EventEmitter
         @set(fieldName, @data[fieldName])
 
     if not @fields['id']?
-      @fields['id'] = new (Fields.UUIDField({ default: Utils.uuid }))(@)
+      @fields['id'] = new (Sonrai.Fields.UUIDField({ default: Sonrai.Utils.uuid }))(@)
 
   name: ->
     return @.constructor.name
@@ -20,13 +20,13 @@ class Model extends EventEmitter
 
   set: (fieldName, value) ->
     if not @fields[fieldName]
-      throw new Errors.FieldDoesNotExist(fieldName)
+      throw new Sonrai.Errors.FieldDoesNotExist(fieldName)
     field = @fields[fieldName]
     field.set(value)
 
   get: (fieldName) ->
     if not @fields[fieldName]
-      throw new Errors.FieldDoesNotExist(field)
+      throw new Sonrai.Errors.FieldDoesNotExist(field)
     return @fields[fieldName].get()
 
   serialize: ->

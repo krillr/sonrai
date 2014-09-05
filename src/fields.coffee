@@ -1,7 +1,7 @@
-Fields = {}
+Sonrai.Fields = {}
 
-Fields.BaseField = (options) ->
-  class _Field extends EventEmitter
+Sonrai.Fields.BaseField = (options) ->
+  class _Field extends Sonrai.EventEmitter
     constructor: (@object) ->
       @options = options || {}
       @set(@options.default || null)
@@ -29,8 +29,8 @@ Fields.BaseField = (options) ->
 
   return _Field
 
-Fields.NumberField = (options) ->
-  class _Field extends Fields.BaseField(options)
+Sonrai.Fields.NumberField = (options) ->
+  class _Field extends Sonrai.Fields.BaseField(options)
     validate: (value) ->
       if isNaN(Number(value))
         return false
@@ -38,8 +38,8 @@ Fields.NumberField = (options) ->
 
   return _Field
 
-Fields.DateTimeField = (options) ->
-  class _Field extends Fields.BaseField(options)
+Sonrai.Fields.DateTimeField = (options) ->
+  class _Field extends Sonrai.Fields.BaseField(options)
     validate: (value) ->
       if not value?
         return true
@@ -57,8 +57,8 @@ Fields.DateTimeField = (options) ->
 
   return _Field
 
-Fields.UUIDField = (options) ->
-  class _Field extends Fields.BaseField(options)
+Sonrai.Fields.UUIDField = (options) ->
+  class _Field extends Sonrai.Fields.BaseField(options)
     validate: (value) ->
       regex = /[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}/i
       return regex.test(value) and (super value)
