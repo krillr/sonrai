@@ -35,7 +35,7 @@
 
   test('General tests', function(t) {
     var obj, q;
-    t.plan(1);
+    t.plan(2);
     obj = new Cat({
       name: "George",
       gender: "male"
@@ -44,9 +44,14 @@
     q = Cat.query().filter({
       name: "George"
     });
+    q.end(function(results) {
+      return t.equal(results[0].get('name'), "George");
+    });
+    q = Cat.query().exclude({
+      name: "George"
+    });
     return q.end(function(results) {
-      console.log(results);
-      return t.equal(results[0].get('name'), "Georg");
+      return t.equal(results.length, 0);
     });
   });
 

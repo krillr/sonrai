@@ -15,7 +15,7 @@ class CatModel extends Sonrai.Model
 Cat = MyDatabase.register CatModel
 
 test 'General tests', (t) ->
-  t.plan(1)
+  t.plan(2)
   obj = new Cat {
       name: "George",
       gender: "male"
@@ -26,3 +26,7 @@ test 'General tests', (t) ->
   q = Cat.query().filter { name: "George" }
   q.end (results) ->
     t.equal results[0].get('name'), "George"
+
+  q = Cat.query().exclude { name: "George" }
+  q.end (results) ->
+    t.equal results.length, 0
