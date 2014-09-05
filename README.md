@@ -31,7 +31,7 @@ q.end (results) ->
 
 Javascript Example
 ======
-```javascript
+```JavaScript
 MyDatabase = new Sonrai.Databases.InMemory()
 
 CatModel = Sonrai.Model.subclass({
