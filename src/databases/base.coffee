@@ -1,4 +1,7 @@
-Sonrai.Databases = {}
+Sonrai.Databases = {
+  Web: {},
+  Node: {}
+}
 
 class Sonrai.Databases.Base extends Sonrai.EventEmitter
   constructor: ->

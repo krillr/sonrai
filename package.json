@@ -8,9 +8,9 @@
       "type" : "git",
       "url" : "https://bitbucket.org/krillrlabs/sonrai"
     },
-  "scripts" : { "prepublish" : "cd src/; cat sonrai.coffee events.coffee errors.coffee utils.coffee databases/base.coffee databases/memory.coffee databases/localstorage.coffee model.coffee query.coffee fields.coffee package.coffee > sonrai-bundle.coffee; coffee -bo ../ -c sonrai-bundle.coffee",
+  "scripts" : { "prepublish" : "cd src/; cat sonrai.coffee events.coffee errors.coffee utils.coffee databases/base.coffee databases/memory.coffee databases/web/localstorage.coffee model.coffee query.coffee fields.coffee package.coffee > sonrai-bundle.coffee; coffee -bo ../ -c sonrai-bundle.coffee",
  "pretest": "npm install tape testling browserify",
- "test": "browserify test/test.js | testling",
+ "test": "tape test/test-node.js; browserify test/test-web.js | testling",
  "posttest": "./build_artifacts.sh"},
   "version" : "0.1.0",
   "testling": {
