@@ -26,7 +26,7 @@ obj.save()
 
 q = Cat.query().filter({ name: "George" })
 q.end (results) ->
-  console.log(results)
+  console.log results
 ```
 
 Javascript Example
