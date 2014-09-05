@@ -28,3 +28,33 @@ q = Cat.query().filter({ name: "George" })
 q.end (results) ->
   console.log(results)
 ```
+
+Javascript Example
+======
+```javascript
+MyDatabase = new Sonrai.Databases.InMemory()
+
+CatModel = Sonrai.Model.subclass({
+    name: Sonrai.Fields.StringField(),
+    gender: Sonrai.Fields.StringField(),
+    birthday: Sonrai.Fields.DateTimeField({
+      default: function() {
+        return new Date()
+      }
+    })
+  })
+
+Cat = MyDatabase.register(CatModel)
+
+obj = new Cat({
+    name: "George",
+    gender: "male"
+  })
+
+obj.save(function() {
+    q = Cat.query().filter({ name: "George" })
+    q.end(function(results) {
+      console.log(results)
+    })
+  })
+```

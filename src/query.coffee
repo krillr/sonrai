@@ -22,7 +22,7 @@ class Sonrai.Query extends Sonrai.EventEmitter
 
   combine: (set, inc) ->
     for field, options of inc
-      if not @model.prototype._fields[field]?
+      if not @model.prototype.fields[field]?
         throw new Sonrai.Errors.FieldDoesNotExist(field)
       if not set[field]?
         set[field] = {}

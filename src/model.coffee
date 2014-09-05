@@ -4,13 +4,19 @@ class Sonrai.Model extends Sonrai.EventEmitter
   @query: (filters) ->
     return new Sonrai.Query(this)
 
-  constructor: (@data) ->
+  @new: (fields) ->
+    class Subclass extends @
+      fields: fields
+    return Subclass
+
+  constructor: (data) ->
+    @field_classes = @fields
     @fields = {}
-    @data = @data || {}
-    for fieldName, fieldObject of @_fields
+    data = data || {}
+    for fieldName, fieldObject of @field_classes
       @fields[fieldName] = new fieldObject(@, fieldName)
-      if @data[fieldName]?
-        @set(fieldName, @data[fieldName])
+      if data[fieldName]?
+        @set(fieldName, data[fieldName])
 
     if not @fields['id']?
       @fields['id'] = new (Sonrai.Fields.UUIDField({ default: Sonrai.Utils.uuid }))(@)

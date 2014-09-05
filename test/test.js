@@ -17,7 +17,7 @@
       return CatModel.__super__.constructor.apply(this, arguments);
     }
 
-    CatModel.prototype._fields = {
+    CatModel.prototype.fields = {
       name: Sonrai.Fields.StringField(),
       gender: Sonrai.Fields.StringField(),
       birthday: Sonrai.Fields.DateTimeField({
