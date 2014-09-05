@@ -9,7 +9,7 @@ class CatModel extends Sonrai.Model
   _fields: {
       name     : Sonrai.Fields.StringField(),
       gender   : Sonrai.Fields.StringField(),
-      birthday a: Sonrai.Fields.DateTimeField {
+      birthday : Sonrai.Fields.DateTimeField {
           default: ->
             return new Date()
         }
