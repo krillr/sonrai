@@ -7,12 +7,13 @@ MyDatabase = new Sonrai.Databases.InMemory()
 
 class CatModel extends Sonrai.Model
   _fields: {
-    name: Sonrai.Fields.StringField(),
-    gender: Sonrai.Fields.StringField(),
-    birthday: Sonrai.Fields.DateTimeField({ default: ->
-      return new Date()
-    })
-  }
+      name     : Sonrai.Fields.StringField(),
+      gender   : Sonrai.Fields.StringField(),
+      birthday a: Sonrai.Fields.DateTimeField {
+          default: ->
+            return new Date()
+        }
+    }
 
 Cat = MyDatabase.register CatModel
 
