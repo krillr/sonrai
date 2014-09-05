@@ -16,10 +16,10 @@ class CatModel extends Sonrai.Model
 
 Cat = MyDatabase.register CatModel
 
-obj = new Cat({
+obj = new Cat {
     name: "George",
     gender: "male"
-  })
+  }
 
 obj.save()
 
