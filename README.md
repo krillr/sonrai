@@ -14,7 +14,7 @@ class CatModel extends Sonrai.Model
     })
   }
 
-Cat = MyDatabase.register(CatModel)
+Cat = MyDatabase.register CatModel
 
 obj = new Cat({
     name: "George",
