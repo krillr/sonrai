@@ -34,24 +34,26 @@
   Cat = MyDatabase.register(CatModel);
 
   test('General tests', function(t) {
-    var obj, q;
+    var obj;
     t.plan(2);
     obj = new Cat({
       name: "George",
       gender: "male"
     });
-    obj.save();
-    q = Cat.query().filter({
-      name: "George"
-    });
-    q.end(function(results) {
-      return t.equal(results[0].get('name'), "George");
-    });
-    q = Cat.query().exclude({
-      name: "George"
-    });
-    return q.end(function(results) {
-      return t.equal(results.length, 0);
+    return obj.save(function() {
+      var q;
+      q = Cat.query().filter({
+        name: "George"
+      });
+      q.end(function(results) {
+        return t.equal(results[0].get('name'), "George");
+      });
+      q = Cat.query().exclude({
+        name: "George"
+      });
+      return q.end(function(results) {
+        return t.equal(results.length, 0);
+      });
     });
   });
 

@@ -3,16 +3,19 @@ class Sonrai.Databases.InMemory extends Sonrai.Databases.Base
     super
     @models = {}
 
-  save: (modelName, object) ->
+  save: (modelName, object, cb) ->
     if not @models[modelName]?
       @models[modelName] = {}
     @models[modelName][object.get('id')] = object.serialize()
-    return
+    if cb?
+      cb()
 
-  delete: (modelName, id) ->
+  delete: (modelName, id, cb) ->
     delete @models[modelName][id]
+    if cb?
+      cb()
 
-  fetch: (modelName, query) ->
+  fetch: (modelName, query, cb) ->
     filtered = []
     for k, v of @models[modelName]
       add = true
@@ -50,4 +53,5 @@ class Sonrai.Databases.InMemory extends Sonrai.Databases.Base
         obj = new query.model()
         obj.deserialize(JSON.parse(JSON.stringify(v)))
         filtered.push(obj)
-    return filtered
+    if cb?
+      cb(filtered)

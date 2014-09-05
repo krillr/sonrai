@@ -21,12 +21,11 @@ test 'General tests', (t) ->
       gender: "male"
     }
 
-  obj.save()
+  obj.save ->
+    q = Cat.query().filter { name: "George" }
+    q.end (results) ->
+      t.equal results[0].get('name'), "George"
 
-  q = Cat.query().filter { name: "George" }
-  q.end (results) ->
-    t.equal results[0].get('name'), "George"
-
-  q = Cat.query().exclude { name: "George" }
-  q.end (results) ->
-    t.equal results.length, 0
+    q = Cat.query().exclude { name: "George" }
+    q.end (results) ->
+      t.equal results.length, 0

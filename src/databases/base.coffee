@@ -21,12 +21,17 @@ class Sonrai.Databases.Base extends Sonrai.EventEmitter
       return v2 < v1
   }
 
-  save: (modelName, object) ->
+  save: (modelName, object, cb) ->
+    if cb?
+      cb()
 
-  delete: (modelName, object) ->
+  delete: (modelName, object, cb) ->
+    if cb?
+      cb()
 
-  deleteQuery: (modelName, query) ->
+  deleteQuery: (modelName, query, cb) ->
     objects = @fetch(modelName, query)
     for object in objects
       @delete(modelName, object.id)
-    return
+    if cb?
+      cb()

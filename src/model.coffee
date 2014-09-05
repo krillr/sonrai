@@ -21,6 +21,8 @@ class Sonrai.Model extends Sonrai.EventEmitter
   db: ->
     return @.constructor.db
 
+  delete: ->
+
   set: (fieldName, value) ->
     if not @fields[fieldName]
       throw new Sonrai.Errors.FieldDoesNotExist(fieldName)
@@ -43,5 +45,5 @@ class Sonrai.Model extends Sonrai.EventEmitter
       if data[fieldName]?
         field.deserialize(data[fieldName])
 
-  save: ->
-    return @db.save(@name(), @)
+  save: (cb) ->
+    return @db.save(@name(), @, cb)
