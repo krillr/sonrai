@@ -1,4 +1,4 @@
-class Sonrai.Databases.LocalStorageDatabase extends Sonrai.Databases.InMemoryDatabase
+class Sonrai.Databases.LocalStorage extends Sonrai.Databases.InMemory
   constructor: ->
     super
     @localStorage = window.localStorage

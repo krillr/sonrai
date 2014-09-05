@@ -1,10 +1,14 @@
 Sonrai.Databases = {}
 
-class Sonrai.Databases.BaseDatabase extends Sonrai.EventEmitter
+class Sonrai.Databases.Base extends Sonrai.EventEmitter
   constructor: ->
 
   register: (model) ->
-    model.db = this
+    db = this
+    class RegisteredModel extends model
+      @db: db
+      db: db
+    return RegisteredModel
 
   operators: {
     'gte': (v1, v2) ->

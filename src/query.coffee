@@ -40,5 +40,5 @@ class Sonrai.Query extends Sonrai.EventEmitter
   delete: ->
     return @model.db.delete(@model.name, @)
 
-  run: ->
-    return @model.db.fetch(@model.name, @)
+  end: (cb) ->
+    cb(@model.db.fetch(@model.name, @))

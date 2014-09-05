@@ -2,23 +2,28 @@ Clientside data model system inspired by MongoDB and the Django ORM, with offlin
 
 CoffeeScript Example
 ======
-```
-MyDatabase = new Sonrai.Databases.LocalStorageDatabase()
+```CoffeeScript
+MyDatabase = new Sonrai.Databases.InMemory()
 
-class MyModel extends Sonrai.Model
+class CatModel extends Sonrai.Model
   _fields: {
-    myField: Sonrai.Fields.NumberField({ default: 1 }),
-    dateField: Sonrai.Fields.DateTimeField({ default: ->
+    name: Sonrai.Fields.StringField(),
+    gender: Sonrai.Fields.StringField(),
+    birthday: Sonrai.Fields.DateTimeField({ default: ->
       return new Date()
     })
   }
 
-MyDatabase.register(MyModel)
+Cat = MyDatabase.register(CatModel)
 
-obj = new MyModel({ myField: Sonrai.Utils.rand(100) })
+obj = new Cat({
+    name: "George",
+    gender: "male"
+  })
+
 obj.save()
 
-q = new Sonrai.Query(MyModel)
-q = q.filter({ myField: obj.get('myField') })
-results = q.run()
+q = Cat.query().filter({ name: "George" })
+q.end (results) ->
+  console.log(results)
 ```

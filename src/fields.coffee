@@ -2,8 +2,8 @@ Sonrai.Fields = {}
 
 Sonrai.Fields.BaseField = (options) ->
   class _Field extends Sonrai.EventEmitter
-    constructor: (@object) ->
-      @options = options || {}
+    constructor: (@object, @name) ->
+      @options = options || { required: false }
       @set(@options.default || null)
 
     deserialize: (fieldData) ->
@@ -22,10 +22,23 @@ Sonrai.Fields.BaseField = (options) ->
       if @validate(value)
         @value = value
       else
-        throw new Errors.ValidationFailed(value)
+        throw new Sonrai.Errors.ValidationFailed(@name, value)
 
     get: ->
       return @value
+
+  return _Field
+
+Sonrai.Fields.StringField = (options) ->
+  class _Field extends Sonrai.Fields.BaseField(options)
+    validate: (value) ->
+      if value == null and not @options.required
+        return true
+      else if value == null and @options.required
+        return false
+      else if typeof value == 'string'
+        return true
+      return false
 
   return _Field
 

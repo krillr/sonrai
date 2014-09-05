@@ -1,11 +1,14 @@
 class Sonrai.Model extends Sonrai.EventEmitter
   @db: null
 
+  @query: (filters) ->
+    return new Sonrai.Query(this)
+
   constructor: (@data) ->
     @fields = {}
     @data = @data || {}
     for fieldName, fieldObject of @_fields
-      @fields[fieldName] = new fieldObject(@)
+      @fields[fieldName] = new fieldObject(@, fieldName)
       if @data[fieldName]?
         @set(fieldName, @data[fieldName])
 
@@ -41,4 +44,4 @@ class Sonrai.Model extends Sonrai.EventEmitter
         field.deserialize(data[fieldName])
 
   save: ->
-    return @db().save(@name(), @)
+    return @db.save(@name(), @)

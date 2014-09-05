@@ -1,8 +1,8 @@
 Sonrai.Errors = {}
 
 class Sonrai.Errors.ValidationFailed extends Error
-  constructor: (value) ->
-    @message = 'Invalid value: ' + value
+  constructor: (name, value) ->
+    @message = 'Invalid value for field "' + name+'": ' + value
 
 class Sonrai.Errors.ModelNotInstantiated extends Error
   message: "Model must be instantiated to a database item to use this function."
