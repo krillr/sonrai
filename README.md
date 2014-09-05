@@ -1,5 +1,7 @@
 Clientside data model system inspired by MongoDB and the Django ORM, with offline storage support.
 
+[![Circle CI](https://circleci.com/gh/krillr/sonrai.png?style=badge)](https://circleci.com/gh/krillr/sonrai)
+
 CoffeeScript Example
 ======
 ```CoffeeScript
