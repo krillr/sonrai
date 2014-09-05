@@ -6,7 +6,7 @@ CoffeeScript Example
 MyDatabase = new Sonrai.Databases.InMemory()
 
 class CatModel extends Sonrai.Model
-  _fields: {
+  fields: {
       name     : Sonrai.Fields.StringField(),
       gender   : Sonrai.Fields.StringField(),
       birthday : Sonrai.Fields.DateTimeField {
@@ -34,7 +34,7 @@ Javascript Example
 ```JavaScript
 MyDatabase = new Sonrai.Databases.InMemory()
 
-CatModel = Sonrai.Model.subclass({
+CatModel = Sonrai.Model.new({
     name: Sonrai.Fields.StringField(),
     gender: Sonrai.Fields.StringField(),
     birthday: Sonrai.Fields.DateTimeField({
