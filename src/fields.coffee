@@ -4,7 +4,6 @@ Sonrai.Fields.BaseField = (options) ->
   class _Field extends Sonrai.EventEmitter
     constructor: (@object, @name) ->
       @options = options || { required: false }
-      @set(@options.default || null)
       @changed = false
       super
 
@@ -13,6 +12,8 @@ Sonrai.Fields.BaseField = (options) ->
         @set(fieldData)
 
     serialize: ->
+      if not @value? and @options.default
+        @set(@options.default)
       return @value
 
     validate: (value) ->
@@ -23,6 +24,7 @@ Sonrai.Fields.BaseField = (options) ->
     set: (value) ->
       if value instanceof Function
         value = value(@)
+        @changed = true
       if @validate(value)
         @value = value
         @changed = true
@@ -30,6 +32,8 @@ Sonrai.Fields.BaseField = (options) ->
         throw new Sonrai.Errors.ValidationFailed(@name, value)
 
     get: ->
+      if not @value? and @options.default
+        @set(@options.default)
       return @value
 
   return _Field
@@ -45,6 +49,10 @@ Sonrai.Fields.StringField = (options) ->
 
 Sonrai.Fields.NumberField = (options) ->
   class _Field extends Sonrai.Fields.BaseField(options)
+    set: (value) ->
+      super value
+      if not (value instanceof Number) and not (value instanceof Function)
+        @value = Number value
     validate: (value) ->
       if value? and isNaN(Number(value))
         return false
@@ -55,7 +63,7 @@ Sonrai.Fields.NumberField = (options) ->
 Sonrai.Fields.DateTimeField = (options) ->
   class _Field extends Sonrai.Fields.BaseField(options)
     validate: (value) ->
-      if value? and not value instanceof Date
+      if value? and not (value instanceof Date)
         return false
       return true and (super value)
 
@@ -76,3 +84,12 @@ Sonrai.Fields.UUIDField = (options) ->
       return regex.test(value) and (super value)
 
   return _Field
+
+Sonrai.Fields.ObjectField = (options) ->
+  class _Field extends Sonrai.Fields.BaseField(options)
+    validate: (value) ->
+      try
+        JSON.stringify(value)
+        return (typeof value == 'object') and (super value)
+      catch
+        return false

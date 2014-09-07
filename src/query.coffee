@@ -23,7 +23,7 @@ class Sonrai.Query extends Sonrai.EventEmitter
 
   combine: (set, inc) ->
     for field, options of inc
-      if not @model.prototype.fields[field]?
+      if not @model.fields[field]?
         throw new Sonrai.Errors.FieldDoesNotExist(field)
       if not set[field]?
         set[field] = {}
@@ -39,7 +39,7 @@ class Sonrai.Query extends Sonrai.EventEmitter
         set[field] = options
 
   delete: ->
-    return @model.db.delete(@model.modelName, @)
+    return @model.db.deleteByQuery(@model.modelName, @)
 
   end: (cb) ->
     @model.db.fetch(@model.modelName, @, cb)

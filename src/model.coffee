@@ -2,7 +2,7 @@ class Sonrai.Model extends Sonrai.EventEmitter
   @db: null
 
   @query: (filters) ->
-    return new Sonrai.Query(this)
+    return new Sonrai.Query this
 
   @new: (fields) ->
     class Subclass extends @
@@ -10,7 +10,7 @@ class Sonrai.Model extends Sonrai.EventEmitter
     return Subclass
 
   constructor: (data) ->
-    @field_classes = @fields
+    @field_classes = @.constructor.fields
     @fields = {}
     data = data || {}
     for fieldName, fieldObject of @field_classes
@@ -19,7 +19,7 @@ class Sonrai.Model extends Sonrai.EventEmitter
         @set(fieldName, data[fieldName])
 
     if not @fields['id']?
-      @fields['id'] = new (Sonrai.Fields.UUIDField({ default: Sonrai.Utils.uuid }))(@)
+      @fields['id'] = new (Sonrai.Fields.UUIDField({ default: Sonrai.Utils.uuid }))(@, 'id')
     super
 
   set: (fieldName, value) ->

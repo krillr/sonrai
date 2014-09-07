@@ -4,14 +4,30 @@ Sonrai.Databases = {
 }
 
 class Sonrai.Databases.Base extends Sonrai.EventEmitter
+  models: {},
+  objectCache: {},
+
+  getObject: (modelName, id, data) ->
+    obj = @objectCache[modelName][id]
+    if not obj?
+      obj = new @models[modelName]()
+      @objectCache[modelName][id] = obj
+    if data?
+      obj.deserialize(data)
+    return obj
+
   register: (model) ->
-    db = this
+    @objectCache[model.name] = {}
+    db = @
     class RegisteredModel extends model
+      @originalClass: model
+      originalClass: model
       @modelName: model.name
       modelName: model.name
       @db: db
       db: db
-    @emit 'register', model, RegisteredModel
+    @models[model.name] = RegisteredModel
+    @emit 'register', RegisteredModel
     return RegisteredModel
 
   operators: {
@@ -26,12 +42,17 @@ class Sonrai.Databases.Base extends Sonrai.EventEmitter
   }
 
   save: (modelName, object, cb) ->
+    if object.get('id') not in @objectCache[modelName]
+      @objectCache[modelName][object.get('id')] = object
     @emit 'save', object
+    for fieldName, fieldObj of object.fields
+      fieldObj.changed = false
     if cb?
       cb()
 
-  delete: (modelName, object, cb) ->
-    @emit 'delete', object
+  delete: (modelName, objectId, cb) ->
+    @emit 'delete', modelName, objectId
+    delete @objectCache[objectId]
     if cb?
       cb()
 

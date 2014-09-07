@@ -1,22 +1,21 @@
 class Sonrai.Databases.InMemory extends Sonrai.Databases.Base
   constructor: ->
     super
-    @models = {}
+    @data = {}
 
   save: (modelName, object, cb) ->
-    if not @models[modelName]?
-      @models[modelName] = {}
-    @models[modelName][object.get('id')] = object.serialize()
+    if not @data[modelName]?
+      @data[modelName] = {}
+    @data[modelName][object.get('id')] = object.serialize()
     super modelName, object, cb
 
-  delete: (modelName, id, cb) ->
-    delete @models[modelName][id]
-    super modelName, id, cb
+  delete: (modelName, ObjectId, cb) ->
+    delete @data[modelName][ObjectId]
+    super modelName, ObjectId, cb
 
   fetch: (modelName, query, cb) ->
-    console.log(modelName)
     filtered = []
-    for k, v of @models[modelName]
+    for k, v of @data[modelName]
       add = true
       for fieldName, options of query.filters
         if options instanceof Array
@@ -49,8 +48,7 @@ class Sonrai.Databases.InMemory extends Sonrai.Databases.Base
             add = false
             break
       if add
-        obj = new query.model()
-        obj.deserialize(JSON.parse(JSON.stringify(v)))
+        obj = @getObject query.model.modelName, v.id, v
         filtered.push(obj)
     if cb?
       cb(filtered)

@@ -21,6 +21,8 @@ class Sonrai.EventEmitter
     @emit 'unbind', event, cb
 
   @emit: (event, args...) ->
+    if not @listeners?
+      @listeners = {}
     for listener in @listeners[event] || []
       listener.apply(this, args)
 
