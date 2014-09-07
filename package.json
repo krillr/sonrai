@@ -19,7 +19,8 @@
   "scripts": {
     "test": "istanbul cover _mocha  -- --compilers coffee:coffee-script/register --recursive", 
     "pretest": "./build.sh", 
-    "preinstall": "./build.sh"
+    "preinstall": "./build.sh",
+    "posttest": "./build_artifacts.sh"
   }, 
   "main": "sonrai-bundle", 
   "name": "sonrai"
