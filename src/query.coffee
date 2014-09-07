@@ -3,6 +3,7 @@ class Sonrai.Query extends Sonrai.EventEmitter
   constructor: (@model) ->
     @filters = {}
     @excludes = {}
+    super
 
   clone: ->
     q = new Query(@model)
@@ -38,7 +39,7 @@ class Sonrai.Query extends Sonrai.EventEmitter
         set[field] = options
 
   delete: ->
-    return @model.db.delete(@model.name, @)
+    return @model.db.delete(@model.modelName, @)
 
   end: (cb) ->
-    @model.db.fetch(@model.name, @, cb)
+    @model.db.fetch(@model.modelName, @, cb)

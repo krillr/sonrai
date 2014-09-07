@@ -4,13 +4,14 @@ Sonrai.Databases = {
 }
 
 class Sonrai.Databases.Base extends Sonrai.EventEmitter
-  constructor: ->
-
   register: (model) ->
     db = this
     class RegisteredModel extends model
+      @modelName: model.name
+      modelName: model.name
       @db: db
       db: db
+    @emit 'register', model, RegisteredModel
     return RegisteredModel
 
   operators: {
@@ -25,10 +26,12 @@ class Sonrai.Databases.Base extends Sonrai.EventEmitter
   }
 
   save: (modelName, object, cb) ->
+    @emit 'save', object
     if cb?
       cb()
 
   delete: (modelName, object, cb) ->
+    @emit 'delete', object
     if cb?
       cb()
 

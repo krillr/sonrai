@@ -1,3 +1,4 @@
+Sonrai = require '../sonrai-bundle'
 MyDatabase = new Sonrai.Databases.InMemory()
 
 class CatModel extends Sonrai.Model

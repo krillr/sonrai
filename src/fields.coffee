@@ -5,6 +5,8 @@ Sonrai.Fields.BaseField = (options) ->
     constructor: (@object, @name) ->
       @options = options || { required: false }
       @set(@options.default || null)
+      @changed = false
+      super
 
     deserialize: (fieldData) ->
       if fieldData?
@@ -23,6 +25,7 @@ Sonrai.Fields.BaseField = (options) ->
         value = value(@)
       if @validate(value)
         @value = value
+        @changed = true
       else
         throw new Sonrai.Errors.ValidationFailed(@name, value)
 

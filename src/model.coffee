@@ -20,14 +20,7 @@ class Sonrai.Model extends Sonrai.EventEmitter
 
     if not @fields['id']?
       @fields['id'] = new (Sonrai.Fields.UUIDField({ default: Sonrai.Utils.uuid }))(@)
-
-  name: ->
-    return @.constructor.name
-
-  db: ->
-    return @.constructor.db
-
-  delete: ->
+    super
 
   set: (fieldName, value) ->
     if not @fields[fieldName]
@@ -52,4 +45,11 @@ class Sonrai.Model extends Sonrai.EventEmitter
         field.deserialize(data[fieldName])
 
   save: (cb) ->
-    return @db.save(@name(), @, cb)
+    @emit 'save', @
+    @.constructor.emit 'save', @
+    return @db.save(@modelName, @, cb)
+
+  delete: (cb) ->
+    @db.delete(@modelName, @.get('id'), cb)
+    @.constructor.emit 'delete', @
+    @emit 'delete', @

@@ -7,15 +7,14 @@ class Sonrai.Databases.InMemory extends Sonrai.Databases.Base
     if not @models[modelName]?
       @models[modelName] = {}
     @models[modelName][object.get('id')] = object.serialize()
-    if cb?
-      cb()
+    super modelName, object, cb
 
   delete: (modelName, id, cb) ->
     delete @models[modelName][id]
-    if cb?
-      cb()
+    super modelName, id, cb
 
   fetch: (modelName, query, cb) ->
+    console.log(modelName)
     filtered = []
     for k, v of @models[modelName]
       add = true
