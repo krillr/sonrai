@@ -10,11 +10,14 @@
   "devDependencies": {
     "coffee-script": "~1.7.1", 
     "chai-datetime": "*", 
+    "chai-change": "*",
+    "chai-fuzzy": "*",
     "chai": "*", 
+    "istanbul": "*",
     "mocha": "*"
   }, 
   "scripts": {
-    "test": "mocha --compilers coffee:coffee-script/register", 
+    "test": "istanbul cover _mocha  -- --compilers coffee:coffee-script/register --recursive", 
     "pretest": "./build.sh", 
     "preinstall": "./build.sh"
   }, 

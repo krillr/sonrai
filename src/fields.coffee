@@ -24,7 +24,6 @@ Sonrai.Fields.BaseField = (options) ->
     set: (value) ->
       if value instanceof Function
         value = value(@)
-        @changed = true
       if @validate(value)
         @value = value
         @changed = true
@@ -80,7 +79,7 @@ Sonrai.Fields.DateTimeField = (options) ->
 Sonrai.Fields.UUIDField = (options) ->
   class _Field extends Sonrai.Fields.BaseField(options)
     validate: (value) ->
-      regex = /[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}/i
+      regex = /[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}/i
       return regex.test(value) and (super value)
 
   return _Field
@@ -93,3 +92,4 @@ Sonrai.Fields.ObjectField = (options) ->
         return (typeof value == 'object') and (super value)
       catch
         return false
+
