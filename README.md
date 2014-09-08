@@ -51,13 +51,8 @@ fixtures = [
 # Create objects for each fixture
 objects = (new Cat data for data in fixtures)
 
-# Create a Q promise that resolves after each object is saved
-save = Q.all((object.save() for object in objects))
-
-# When all objects are saved, run a count
-count = save.then(Cat.query().count)
-
-# When count comes back with data, log it to the console
-count.then (count) -> console.log count
+MyDatabase.saveAll(objects) # Create a Q promise that resolves after each object is saved
+  .then(Cat.query().count) # When all objects are saved, run a count
+  .then (count) -> console.log count # When count comes back with data, log it to the console
 ```
 

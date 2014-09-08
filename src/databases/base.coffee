@@ -43,6 +43,10 @@ class Sonrai.Databases.Base extends Sonrai.EventEmitter
       return v2 < v1
   }
 
+  saveAll: (objects) ->
+    calls = (object.save() for object in objects)
+    return Q.all(calls)
+
   save: (modelName, object) ->
     response = Q.defer()
 
