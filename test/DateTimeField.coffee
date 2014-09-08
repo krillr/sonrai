@@ -1,4 +1,4 @@
-Sonrai = require '../../sonrai-bundle'
+Sonrai = require '../sonrai-bundle'
 
 chai = require 'chai'
 chai.use require 'chai-datetime'

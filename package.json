@@ -1,31 +1,52 @@
 {
-  "repository": {
-    "url": "https://bitbucket.org/krillrlabs/sonrai", 
-    "type": "git"
-  }, 
-  "version": "0.1.0", 
-  "description": "clientside data model system inspired by mongodb and the django orm, with offline storage support.",
-  "dependencies": {
-    "q": "*"
+  "name": "sonrai",
+  "description": "Clientside data model system inspired by MongoDB and the Django ORM, with offline storage support.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/krillr/sonrai",
+  "author": {
+    "name": "Aaron Krill",
+    "email": "aaron@krillr.com"
   },
-  "license": "Apache-2.0", 
-  "author": "Krillr Labs <aaron@krillr.com>", 
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/krillr/sonrai"
+  },
+  "bugs": {
+    "url": "https://github.com/krillr/sonrai/issues"
+  },
+  "licenses": [
+    {
+      "type": "Apache",
+      "url": "https://github.com/krillr/sonrai/blob/master/LICENSE-Apache"
+    },
+    {
+      "type": "2.0",
+      "url": "https://github.com/krillr/sonrai/blob/master/LICENSE-2.0"
+    }
+  ],
+  "main": "lib/sonrai",
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "scripts": {
+    "test": "./test.sh",
+    "pretest": "./build.sh",
+    "preinstall": "./build.sh",
+    "posttest": "./build_artifacts.sh"
+  },
   "devDependencies": {
-    "coffee-script": "~1.7.1", 
-    "chai-datetime": "*", 
+    "wd": "latest",
+    "chai": "latest",
+    "chai-as-promised": "latest",
+    "coffee-script": "~1.7.1",
+    "chai-datetime": "*",
     "chai-change": "*",
     "chai-fuzzy": "*",
     "chai": "*",
     "chai-as-promised": "*",
     "istanbul": "*",
-    "mocha": "*"
-  }, 
-  "scripts": {
-    "test": "istanbul cover _mocha  -- --compilers coffee:coffee-script/register --recursive", 
-    "pretest": "./build.sh", 
-    "preinstall": "./build.sh",
-    "posttest": "./build_artifacts.sh"
-  }, 
-  "main": "sonrai-bundle", 
-  "name": "sonrai"
+    "mocha": "*",
+    "mochify": "*"
+  },
+  "keywords": []
 }

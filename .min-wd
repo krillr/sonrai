@@ -1,0 +1,11 @@
+{
+  "sauceLabs": true,
+  "browsers"  : [{
+    "name"    : "internet explorer",
+    "version" : "11"
+  }, {
+    "name"    : "chrome"
+  }, {
+    "name"    : "firefox"
+  }]
+}
