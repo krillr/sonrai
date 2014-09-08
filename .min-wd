@@ -1,5 +1,4 @@
 {
-  "sauceLabs": true,
   "browsers"  : [{
     "name"    : "internet explorer",
     "version" : "11"
