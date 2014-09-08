@@ -20,6 +20,20 @@ describe 'StringField', ->
       })
     field.get().should.equal 'more beef!'
 
+  it 'should restrict values to a given set of choices', ->
+    field = new (Sonrai.Fields.StringField {
+      choices: ['a', 'b']
+    })
+    expect(-> field.set('c')).to.throw Sonrai.Errors.InvalidChoice
+    expect(-> field.set('b')).to.not.throw Sonrai.Errors.InvalidChoice
+    field.get().should.equal 'b'
+
+  it 'should not allow min option', ->
+    expect(-> new (Sonrai.Fields.StringField { min:1 })).to.throw Sonrai.Errors.ConfigurationError
+
+  it 'should not allow max option', ->
+    expect(-> new (Sonrai.Fields.StringField { max:1 })).to.throw Sonrai.Errors.ConfigurationError
+
   it 'should not allow a non-string as a value', ->
     field = new (Sonrai.Fields.StringField())
     expect(-> field.set(1)).to.throw Sonrai.Errors.ValidationError

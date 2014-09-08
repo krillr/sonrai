@@ -23,6 +23,19 @@ describe 'DateTimeField', ->
     field.get().should.equalDate new Date(2009,9,12,11,30,23)
     field.get().should.equalTime new Date(2009,9,12,11,30,23)
 
+  it 'should not allow a value to be set below a specified minimum', ->
+    field = new (Sonrai.Fields.NumberField({ min:new Date(2009,1,1) }))
+    expect(-> field.set new Date(2009,1,1)).to.not.throw Sonrai.Errors.ValidationError
+    expect(-> field.set new Date(2008,12,31)).to.throw Sonrai.Errors.ValidationError
+
+  it 'should not allow a value to exceed a specified maximum', ->
+    field = new (Sonrai.Fields.NumberField({ max:new Date(2008,12,31) }))
+    expect(-> field.set new Date(2008,12,31)).to.not.throw Sonrai.Errors.ValidationError
+    expect(-> field.set new Date(2009,1,1)).to.throw Sonrai.Errors.ValidationError
+
+  it 'should not allow choices option', ->
+    expect(-> new (Sonrai.Fields.DateTimeField { choices:[] })).to.throw Sonrai.Errors.ConfigurationError
+
   it 'should not allow a non-date as a value', ->
     field = new (Sonrai.Fields.DateTimeField())
     expect(-> field.set('a')).to.throw Sonrai.Errors.ValidationError

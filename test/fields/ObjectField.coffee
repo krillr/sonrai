@@ -19,6 +19,15 @@ describe 'ObjectField', ->
       })
     field.get().should.be.like { 1:2 }
 
+  it 'should not allow choices option', ->
+    expect(-> new (Sonrai.Fields.ObjectField { choices:[] })).to.throw Sonrai.Errors.ConfigurationError
+
+  it 'should not allow min option', ->
+    expect(-> new (Sonrai.Fields.ObjectField { min:1 })).to.throw Sonrai.Errors.ConfigurationError
+
+  it 'should not allow max option', ->
+    expect(-> new (Sonrai.Fields.ObjectField { max:1 })).to.throw Sonrai.Errors.ConfigurationError
+
   it 'should not allow a non-object as a value', ->
     field = new (Sonrai.Fields.ObjectField())
     expect(-> field.set 'a').to.throw Sonrai.Errors.ValidationError

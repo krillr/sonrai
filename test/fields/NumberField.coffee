@@ -30,6 +30,16 @@ describe 'NumberField', ->
     expect(-> field.set('1.1')).to.not.throw Sonrai.Errors.ValidationError
     expect(field.get()).to.equal 1.1
 
+  it 'should not allow a value to be set below a specified minimum', ->
+    field = new (Sonrai.Fields.NumberField({ min:25 }))
+    expect(-> field.set 25).to.not.throw Sonrai.Errors.ValidationError
+    expect(-> field.set 24).to.throw Sonrai.Errors.ValidationError
+
+  it 'should not allow a value to exceed a specified maximum', ->
+    field = new (Sonrai.Fields.NumberField({ max:50 }))
+    expect(-> field.set 50).to.not.throw Sonrai.Errors.ValidationError
+    expect(-> field.set 51).to.throw Sonrai.Errors.ValidationError
+
   it 'should not allow a non-number or non-numeric string as a value', ->
     field = new (Sonrai.Fields.NumberField())
     expect(-> field.set('a')).to.throw Sonrai.Errors.ValidationError
