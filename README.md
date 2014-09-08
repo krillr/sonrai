@@ -17,6 +17,10 @@ Query/Object Caching
 ------
 Most frameworks do some sort of object caching. Many do this on the per-query level, caching objects only for that particular query. Sonrai chooses to do things a little differently -- once an object has been loaded, it stays loaded and the same object is always returned every time it turns up in a query. The following code example explains it a bit better.
 
+Synchronization
+------
+Sonrai is designed specifically for developing offline applications, with database synchronization back to "the cloud." As such Sonrai's first priority is local access/storage. All queries are executed and fulfilled on the client, with no communication with the cloud storage. Data synchronization intervals depends on the chosen synchronization driver.
+
 ```CoffeeScript
 Cat.query({ name: "George" }).get().then (object) ->
   results[0].set 'name', 'Fred' # Set the name on the object, but don't save it
