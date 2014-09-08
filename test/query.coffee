@@ -36,7 +36,6 @@ objects = [
  ]
 
 setUp = ->
-  a.b.c()
   Database = new Sonrai.Databases.InMemory()
 
   class CatModel extends Sonrai.Model
