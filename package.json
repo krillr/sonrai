@@ -29,8 +29,8 @@
     "node": ">= 0.10.0"
   },
   "scripts": {
-    "test": "./test.sh",
-    "pretest": "./build.sh",
+    "test": "istanbul cover _mocha  -- --compilers coffee:coffee-script/register",
+    "pretest": "coffee -c test/*.coffee",
     "preinstall": "./build.sh",
     "posttest": "./build_artifacts.sh"
   },
