@@ -13,13 +13,14 @@ Promises
 ------
 Sonrai makes gratuitous use of Promises, because let's face it -- callbacks suck. In particular, the lightweight and efficient Q library is used. All async calls will return promises. Please code accordingly!
 
+Synchronization
+------
+Sonrai is designed specifically for developing offline applications, with database synchronization back to "the cloud." As such Sonrai's first priority is local access/storage. All queries are executed and fulfilled on the client, with no communication with the cloud storage. Data synchronization intervals depends on the chosen synchronization driver.
+
 Query/Object Caching
 ------
 Most frameworks do some sort of object caching. Many do this on the per-query level, caching objects only for that particular query. Sonrai chooses to do things a little differently -- once an object has been loaded, it stays loaded and the same object is always returned every time it turns up in a query. The following code example explains it a bit better.
 
-Synchronization
-------
-Sonrai is designed specifically for developing offline applications, with database synchronization back to "the cloud." As such Sonrai's first priority is local access/storage. All queries are executed and fulfilled on the client, with no communication with the cloud storage. Data synchronization intervals depends on the chosen synchronization driver.
 
 ```CoffeeScript
 Cat.query({ name: "George" }).get().then (object) ->
