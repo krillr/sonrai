@@ -51,8 +51,8 @@ fixtures = [
 # Create objects for each fixture
 objects = Cat.fromFixtures fixtures
 
-MyDatabase.saveAll(objects) # Create a Q promise that resolves after each object is saved
-  .then(Cat.query().count) # When all objects are saved, run a count
+MyDatabase.saveAll objects # Create a Q promise that resolves after each object is saved
+  .then Cat.query().count # When all objects are saved, run a count
   .then (count) -> console.log count # When count comes back with data, log it to the console
 ```
 
