@@ -9,12 +9,10 @@ class Sonrai.Databases.Web.LocalStorage extends Sonrai.Databases.InMemory
           @data[modelName] = {}
         @data[modelName][objectId] = JSON.parse(@localStorage[k])
 
-  save: (modelName, object) ->
-    super modelName, object
+  _save: (modelName, object) ->
     @localStorage['sonrai.' + modelName + "." + object.get('id')] = JSON.stringify(@data[modelName][object.get('id')])
-    return
+    super modelName, object
 
-  delete: (modelName, id) ->
-    super modelName, id
+  _delete: (modelName, id) ->
     delete @localStorage['sonrai.' + modelName + "." + id]
-
+    super modelName, id

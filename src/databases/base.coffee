@@ -1,3 +1,5 @@
+Q = require 'q'
+
 Sonrai.Databases = {
   Web: {},
   Node: {}
@@ -41,24 +43,42 @@ class Sonrai.Databases.Base extends Sonrai.EventEmitter
       return v2 < v1
   }
 
-  save: (modelName, object, cb) ->
+  save: (modelName, object) ->
+    response = Q.defer()
+
     if object.get('id') not in @objectCache[modelName]
       @objectCache[modelName][object.get('id')] = object
-    @emit 'save', object
-    for fieldName, fieldObj of object.fields
-      fieldObj.changed = false
-    if cb?
-      cb()
+    @_save modelName, object, response.resolve, response.reject
 
-  delete: (modelName, objectId, cb) ->
-    @emit 'delete', modelName, objectId
-    delete @objectCache[objectId]
-    if cb?
-      cb()
+    promise = response.promise
+    return promise.then (result) =>
+      @emit 'save', result.object
+      for fieldName, fieldObj of result.object.fields
+        fieldObj.changed = false
 
-  deleteQuery: (modelName, query, cb) ->
-    objects = @fetch(modelName, query)
-    for object in objects
-      @delete(modelName, object.id)
-    if cb?
-      cb()
+  delete: (modelName, objectId) ->
+    response = Q.defer()
+    
+    @_delete modelName, objectId, response.resolve, response.reject
+
+    response.promise.then ->
+      @emit 'delete', modelName, objectId
+      delete @objectCache[objectId]
+    return response.promise
+
+  count: (modelName, query) ->
+    response = Q.defer()
+    @_count modelName, query, response.resolve, response.reject
+    return response.promise
+
+  fetch: (modelName, query) ->
+    response = Q.defer()
+    @_fetch modelName, query, response.resolve, response.reject
+    return response.promise
+
+  deleteByQuery: (modelName, query) ->
+    response = Q.defer()
+    @fetch(modelName, query).then (result) =>
+      deletions = (@delete(modelName, object.get 'id') for object in result)
+      Q.all(deletions).then response.resolve
+    return response.promise

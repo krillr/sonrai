@@ -3,17 +3,23 @@ class Sonrai.Databases.InMemory extends Sonrai.Databases.Base
     super
     @data = {}
 
-  save: (modelName, object, cb) ->
+  _save: (modelName, object, onSuccess, onError) ->
     if not @data[modelName]?
       @data[modelName] = {}
     @data[modelName][object.get('id')] = object.serialize()
-    super modelName, object, cb
+    onSuccess { modelName: modelName, object: object }
 
-  delete: (modelName, ObjectId, cb) ->
+  _delete: (modelName, ObjectId, onSuccess, onError) ->
     delete @data[modelName][ObjectId]
-    super modelName, ObjectId, cb
+    onSuccess()
 
-  fetch: (modelName, query, cb) ->
+  _count: (modelName, query, onSuccess, onError) ->
+    @_fetch modelName, query, (results) ->
+      onSuccess results.length
+    , (err) ->
+      onError err
+
+  _fetch: (modelName, query, onSuccess, onError) ->
     filtered = []
     for k, v of @data[modelName]
       add = true
@@ -50,5 +56,4 @@ class Sonrai.Databases.InMemory extends Sonrai.Databases.Base
       if add
         obj = @getObject query.model.modelName, v.id, v
         filtered.push(obj)
-    if cb?
-      cb(filtered)
+    onSuccess(filtered)

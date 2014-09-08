@@ -24,7 +24,10 @@ class Sonrai.EventEmitter
     if not @listeners?
       @listeners = {}
     for listener in @listeners[event] || []
-      listener.apply(this, args)
+      try
+        listener.apply(this, args)
+      catch
+        console.log 'error emitting'
 
   constructor: ->
     @listeners = {}
@@ -50,5 +53,8 @@ class Sonrai.EventEmitter
     if not @listeners?
       @listeners = {}
     for listener in @listeners[event] || []
-      listener.apply(this, args)
+      try
+        listener.apply(this, args)
+      catch
+        console.log 'error emitting'
 

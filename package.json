@@ -4,7 +4,10 @@
     "type": "git"
   }, 
   "version": "0.1.0", 
-  "description": "clientside data model system inspired by mongodb and the django orm, with offline storage support.", 
+  "description": "clientside data model system inspired by mongodb and the django orm, with offline storage support.",
+  "dependencies": {
+    "q": "*"
+  },
   "license": "Apache-2.0", 
   "author": "Krillr Labs <aaron@krillr.com>", 
   "devDependencies": {
@@ -12,7 +15,8 @@
     "chai-datetime": "*", 
     "chai-change": "*",
     "chai-fuzzy": "*",
-    "chai": "*", 
+    "chai": "*",
+    "chai-as-promised": "*",
     "istanbul": "*",
     "mocha": "*"
   }, 

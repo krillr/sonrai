@@ -79,8 +79,7 @@ Sonrai.Fields.DateTimeField = (options) ->
 Sonrai.Fields.UUIDField = (options) ->
   class _Field extends Sonrai.Fields.BaseField(options)
     validate: (value) ->
-      regex = /[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}/i
-      return regex.test(value) and (super value)
+      return Sonrai.Utils.UUIDRegex.test(value) and (super value)
 
   return _Field
 

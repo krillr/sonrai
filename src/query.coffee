@@ -38,8 +38,11 @@ class Sonrai.Query extends Sonrai.EventEmitter
       else
         set[field] = options
 
-  delete: ->
-    return @model.db.deleteByQuery(@model.modelName, @)
+  delete: =>
+    return @model.db.deleteByQuery @model.modelName, @
 
-  end: (cb) ->
-    @model.db.fetch(@model.modelName, @, cb)
+  count: =>
+    return @model.db.count @model.modelName, @
+
+  fetch: =>
+    return @model.db.fetch @model.modelName, @

@@ -2,11 +2,14 @@ class Sonrai.Model extends Sonrai.EventEmitter
   @db: null
 
   @query: (filters) ->
-    return new Sonrai.Query this
+    q = new Sonrai.Query this
+    if filters?
+      q = q.filter(filters)
+    return q
 
   @new: (fields) ->
     class Subclass extends @
-      fields: fields
+      @fields: fields
     return Subclass
 
   constructor: (data) ->
@@ -23,13 +26,13 @@ class Sonrai.Model extends Sonrai.EventEmitter
     super
 
   set: (fieldName, value) ->
-    if not @fields[fieldName]
+    if not @fields[fieldName]?
       throw new Sonrai.Errors.FieldDoesNotExist(fieldName)
     field = @fields[fieldName]
     field.set(value)
 
   get: (fieldName) ->
-    if not @fields[fieldName]
+    if not @fields[fieldName]?
       throw new Sonrai.Errors.FieldDoesNotExist(field)
     return @fields[fieldName].get()
 
@@ -44,12 +47,16 @@ class Sonrai.Model extends Sonrai.EventEmitter
       if data[fieldName]?
         field.deserialize(data[fieldName])
 
-  save: (cb) ->
-    @emit 'save', @
-    @.constructor.emit 'save', @
-    return @db.save(@modelName, @, cb)
+  save: =>
+    promise = @db.save(@modelName, @)
+    promise.then ->
+      @emit 'save', @
+      @.constructor.emit 'save', @
+    return promise
 
-  delete: (cb) ->
-    @db.delete(@modelName, @.get('id'), cb)
-    @.constructor.emit 'delete', @
-    @emit 'delete', @
+  delete: (cb) =>
+    promise = @db.delete(@modelName, @.get('id'))
+    promise.then (result) =>
+      @.constructor.emit 'delete', @
+      @emit 'delete', @
+    return promise
