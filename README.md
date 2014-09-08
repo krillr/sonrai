@@ -49,7 +49,7 @@ fixtures = [
 ]
 
 # Create objects for each fixture
-objects = (new Cat data for data in fixtures)
+objects = Cat.fromFixtures fixtures
 
 MyDatabase.saveAll(objects) # Create a Q promise that resolves after each object is saved
   .then(Cat.query().count) # When all objects are saved, run a count

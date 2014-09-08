@@ -12,6 +12,9 @@ class Sonrai.Model extends Sonrai.EventEmitter
       @fields: fields
     return Subclass
 
+  @fromFixtures: (fixtures) ->
+    return (new @ data for data in fixtures)
+
   constructor: (data) ->
     @field_classes = @.constructor.fields
     @fields = {}
